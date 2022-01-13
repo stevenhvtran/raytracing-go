@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
@@ -36,6 +37,7 @@ func makeImageSlice(imageWidth, imageHeight int) (image [][][3]uint8) {
 
 func renderImage(imageWidth, imageHeight int, image [][][3]uint8) {
 	for j := 0; j < imageHeight; j++ {
+		log.Printf("Scanlines remaining: %d", imageHeight-j)
 		for i := 0; i < imageWidth; i++ {
 			r := float64(i) / (float64(imageWidth) - 1)
 			g := (float64(imageHeight) - float64(j) - 1) / (float64(imageHeight) - 1)
@@ -46,6 +48,7 @@ func renderImage(imageWidth, imageHeight int, image [][][3]uint8) {
 			image[j][i][2] = uint8(b * 255.99)
 		}
 	}
+	log.Print("Done.")
 }
 
 func imageToPpm(imageWidth int, imageHeight int, image [][][3]uint8) (ppm string) {
